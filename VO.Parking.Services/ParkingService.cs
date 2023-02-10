@@ -61,7 +61,11 @@ namespace VO.Parking.Services
 
             car = new Car()
             {
-                LicenseNumber = licenseNumber
+                LicenseNumber = licenseNumber,
+                LastTimeEntryDate = DateTime.Now,
+                FirtsTimeEntryDate= DateTime.Now,
+                ParkingUsedCount = 1,
+                CarParkingStatus = 1
             };
 
             this.context.Cars.Add(car);

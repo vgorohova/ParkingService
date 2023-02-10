@@ -55,7 +55,7 @@ namespace VO.Parking.API
             }
             catch (Exception ex)
             {
-                this.log.Error($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenceNumber} \n exception: {ex.Message}");
+                this.log.Error($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenceNumber} \n exception: {ex.Message} \n {ex.InnerException}");
                 return null;
             }
         }

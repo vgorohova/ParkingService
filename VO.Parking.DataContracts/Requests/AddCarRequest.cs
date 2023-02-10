@@ -10,6 +10,7 @@ using VO.Parking.DataContracts.Responses;
 
 namespace VO.Parking.DataContracts.Requests
 {
+    [Route("/add-car")]
     public class AddCarRequest : IReturn<CarResponse>
     {
         public string LicenceNumber { get; set; }
