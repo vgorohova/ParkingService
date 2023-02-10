@@ -28,12 +28,14 @@ namespace VO.Parking.Services
 
         public List<Car> GetAllCars()
         {
-            if (!cacheManager.IsSet(CacheKeys.AllCars))
-            {
-                var authors = this.context.Cars.ToList();
-                cacheManager.Set(CacheKeys.AllCars, authors);
-            }
-            return cacheManager.Get<List<Car>>(CacheKeys.AllCars);
+            return this.context.Cars.ToList();
+
+            //if (!cacheManager.IsSet(CacheKeys.AllCars))
+            //{
+            //var cars = this.context.Cars.ToList();
+            //cacheManager.Set(CacheKeys.AllCars, cars);
+            //}
+            //return cacheManager.Get<List<Car>>(CacheKeys.AllCars);
         }
 
         public Car GetCar(int id)
@@ -72,6 +74,21 @@ namespace VO.Parking.Services
             this.context.SaveChanges();
 
             cacheManager.Remove(CacheKeys.AllCars);
+            return car;
+        }
+
+        public Car CarIsLeaving(string licenseNumber)
+        {
+            Car car = GetCar(licenseNumber);
+            if(car == null)
+            {
+                return null;
+            }
+
+            car.CarParkingStatus = 0;
+            this.context.Entry(car).State = EntityState.Modified;
+            this.context.SaveChanges();
+
             return car;
         }
     }

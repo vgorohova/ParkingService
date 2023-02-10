@@ -10,6 +10,7 @@ using ServiceStack.Logging;
 using VO.Parking.Services;
 
 using VO.Parking.DataContracts.Requests;
+using VO.Parking.DataContracts.Responses;
 
 namespace VO.Parking.API
 {
@@ -38,81 +39,48 @@ namespace VO.Parking.API
             }
             catch(Exception ex)
             {
-                this.log.Error($"CarsApi.GetAllCarsRequest exception: {ex.Message}");
+                this.log.Error($"CarsApi.GetAllCarsRequest \n exception: {ex.Message} \n {ex.InnerException}");
                 return null;
             }
         }
 
         public object Any(AddCarRequest addCarRequest)
         {
-            this.log.Info($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenceNumber}");
+            this.log.Info($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenseNumber}");
 
             try
             {
-                var car = this.parkingService.AddCar(addCarRequest.LicenceNumber);
+                var car = this.parkingService.AddCar(addCarRequest.LicenseNumber);
 
                 return this.mapper.Map<Entities.Car, DataContracts.Car>(car);
             }
             catch (Exception ex)
             {
-                this.log.Error($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenceNumber} \n exception: {ex.Message} \n {ex.InnerException}");
+                this.log.Error($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenseNumber} \n exception: {ex.Message} \n {ex.InnerException}");
                 return null;
             }
         }
 
-        //public object Any(GetCarRequest)
+        public object Any(LeaveRequest leaveRequest)
+        {
+            this.log.Info($"CarsApi.LeaveRequest, carLicenceNumber: {leaveRequest.LicenseNumber}");
 
+            try
+            {
+                var car = this.parkingService.CarIsLeaving(leaveRequest.LicenseNumber);
 
-
-        //public object Any(GenresRequest genresRequest)
-        //{
-        //    this.log.Info("ApiService.GenresRequest");
-
-        //    try
-        //    {
-        //        var genres = this.bibliotecaService.GetAllGenres();
-
-        //        return this.mapper.Map<List<Genre>, List<DataContracts.Genre>>(genres);
-        //    }
-        //    catch(Exception ex) 
-        //    {
-        //        this.log.Error($"ApiService.GenresRequest exception: {ex.Message}");
-        //        return null;
-        //    }
-        //}
-
-        //public object Any(GenreRequest genreRequest)
-        //{
-        //    this.log.Info($"ApiService.GenreRequest, id: {genreRequest.id}");
-
-        //    try
-        //    {
-        //        var genre = this.bibliotecaService.GetGenre(genreRequest.id);
-
-        //        return this.mapper.Map<Genre, DataContracts.Genre>(genre);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this.log.Error($"ApiService.GenreRequest, id: {genreRequest.id} exception: {ex.Message}");
-        //        return null;
-        //    }
-        //}
-
-        //public object Any(CreateGenreRequest createGenreRequest)
-        //{
-        //    this.log.Info($"ApiService.CreateGenreRequest, genreName: {createGenreRequest.GenreName}");
-
-        //    try
-        //    {
-        //        var genre = this.bibliotecaService.AddGenre(createGenreRequest.GenreName);
-
-        //        return this.mapper.Map<Genre, DataContracts.Genre>(genre);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this.log.Error($"ApiService.CreateGenreRequest, genreName: {createGenreRequest.GenreName} exception: {ex.Message}");
-        //        return null;
-        //    }
-        //}
+                return //this.mapper.Map<Entities.Car, DataContracts.Car>(car);
+                    new LeaveResponse
+                    {
+                        Car = this.mapper.Map<Entities.Car, DataContracts.Car>(car),
+                        StayedTime = DateTime.Now.Subtract(car.LastTimeEntryDate)
+                    };
+            }
+            catch (Exception ex)
+            {
+                this.log.Error($"CarsApi.LeaveRequest, carLicenceNumber: {leaveRequest.LicenseNumber} \n exception: {ex.Message} \n {ex.InnerException}");
+                return null;
+            }
+        }
     }
 }

@@ -56,7 +56,6 @@
     <Compile Include="BibliotecaService.cs" />
     <Compile Include="Caching\CacheKeys.cs" />
     <Compile Include="Caching\ICache.cs" />
-    <Compile Include="IBibliotecaService.cs" />
     <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="IParkingService.cs" />
     <Compile Include="ISettings.cs" />

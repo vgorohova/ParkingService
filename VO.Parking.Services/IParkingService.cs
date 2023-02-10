@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using VO.Parking.Entities;
 
 namespace VO.Parking.Services
@@ -17,5 +13,7 @@ namespace VO.Parking.Services
         Car GetCar(string licenseNumber);
 
         Car AddCar(string licenceNumber);
+
+        Car CarIsLeaving(string licenseNumber);
     }
 }

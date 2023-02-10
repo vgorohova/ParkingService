@@ -94,8 +94,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddCarRequest.cs" />
     <Compile Include="Requests\AllCarsRequest.cs" />
+    <Compile Include="Requests\LeaveRequest.cs" />
     <Compile Include="Responses\CarResponse.cs" />
     <Compile Include="Responses\CarsResponse.cs" />
+    <Compile Include="Responses\LeaveResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

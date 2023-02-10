@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace VO.Parking.DataContracts
 {
+    [Serializable]
     public class Car
     {
         public int Id { get; set; }
