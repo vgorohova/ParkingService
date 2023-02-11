@@ -9,5 +9,13 @@ namespace VO.Parking
         {
             get { return ConfigurationManager.ConnectionStrings["ParkingDbConnectionString"].ConnectionString; }
         }
+
+        public string ImageUploadPholder
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ImageUploadPholder"].ToString();
+            }
+        }
     }
 }

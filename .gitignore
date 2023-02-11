@@ -2,7 +2,6 @@
 packages/
 bin/
 obj/
-logs/
 lib/
 *.user
 
@@ -51,3 +50,5 @@ _ReSharper.*
 
 
 VO.Parking.Web/
+logs/
+uploads/

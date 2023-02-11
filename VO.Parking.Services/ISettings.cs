@@ -8,5 +8,7 @@ namespace VO.Parking
     public interface ISettings
     {
         string ParkingDbConnectionString { get; }
+
+        string ImageUploadPholder { get; }
     }
 }
