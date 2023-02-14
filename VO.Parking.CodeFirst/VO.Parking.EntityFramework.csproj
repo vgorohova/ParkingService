@@ -81,8 +81,6 @@
     <Compile Include="Entities\ParkingState.cs">
       <DependentUpon>ParkingDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ParkingDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

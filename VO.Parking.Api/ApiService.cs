@@ -52,15 +52,60 @@ namespace VO.Parking.API
             }
         }
 
+        public object Get(ParkingStateRequest request)
+        {
+            this.log.Info("CarsApi.ParkingStateRequest");
+            try
+            {
+                Entities.ParkingState state = this.parkingService.GetParkingState();
+                return this.mapper.Map<Entities.ParkingState, ParkingStateResponse>(state);
+            }
+            catch (Exception ex)
+            {
+                this.log.Error($"CarsApi.ParkingStateRequest \n exception: {ex.Message} \n {ex.InnerException}");
+                return null;
+            }
+        }
+
+        public object Get(GetParkingCarsRequest request)
+        {
+            this.log.Info("CarsApi.GetParkingCarsRequest");
+            try
+            {
+                var cars = this.parkingService.GetParkingCars();
+                return this.mapper.Map<List<Entities.Car>, List<DataContracts.Car>>(cars);
+            }
+            catch (Exception ex)
+            {
+                this.log.Error($"CarsApi.GetParkingCarsRequest \n exception: {ex.Message} \n {ex.InnerException}");
+                return null;
+            }
+        }
+
         public object Any(AddCarRequest addCarRequest)
         {
             this.log.Info($"CarsApi.AddCarRequest, carLicenceNumber: {addCarRequest.LicenseNumber}");
 
             try
             {
-                var car = this.parkingService.AddCar(addCarRequest.LicenseNumber);
+                if (this.parkingService.ParkingIsAvailbale())
+                {
+                    var car = this.parkingService.AddCar(addCarRequest.LicenseNumber);
 
-                return this.mapper.Map<Entities.Car, DataContracts.Car>(car);
+                    return
+                        new CarResponse
+                        {
+                            Car = this.mapper.Map<Entities.Car, DataContracts.Car>(car),
+                            IsSuccess = true
+                        };
+                }
+
+                return
+                        new CarResponse
+                        {
+                            IsSuccess = false,
+                            ErrorMessage = "Parking is not available!"
+                        };
             }
             catch (Exception ex)
             {

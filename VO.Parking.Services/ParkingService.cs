@@ -38,6 +38,16 @@ namespace VO.Parking.Services
             //return cacheManager.Get<List<Car>>(CacheKeys.AllCars);
         }
 
+        public ParkingState GetParkingState()
+        {
+            return this.context.ParkingStates.FirstOrDefault();
+        }
+
+        public List<Car> GetParkingCars()
+        {
+            return this.context.ParkingCars.Include(c => c.Car).Select(c => c.Car).ToList();
+        }
+
         public Car GetCar(int id)
         {
             return this.context.Cars.Find(id);
@@ -55,6 +65,7 @@ namespace VO.Parking.Services
             {
                 car.ParkingUsedCount ++;
                 car.LastTimeEntryDate = DateTime.Now;
+                car.CarParkingStatus = 1;
                 this.context.Entry(car).State = EntityState.Modified;
                 this.context.SaveChanges();
                 
@@ -90,6 +101,13 @@ namespace VO.Parking.Services
             this.context.SaveChanges();
 
             return car;
+        }
+
+        public bool ParkingIsAvailbale()
+        {
+            ParkingState state =  GetParkingState();
+            
+            return state.AvailableParkingLots > 0;
         }
     }
 }

@@ -8,6 +8,10 @@ namespace VO.Parking.Services
     {
         List<Car> GetAllCars();
 
+        ParkingState GetParkingState();
+
+        List<Car> GetParkingCars();
+
         Car GetCar(int id);
 
         Car GetCar(string licenseNumber);
@@ -15,5 +19,7 @@ namespace VO.Parking.Services
         Car AddCar(string licenceNumber);
 
         Car CarIsLeaving(string licenseNumber);
+
+        bool ParkingIsAvailbale();
     }
 }

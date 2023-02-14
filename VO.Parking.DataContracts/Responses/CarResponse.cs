@@ -9,5 +9,9 @@ namespace VO.Parking.DataContracts.Responses
     public class CarResponse
     {
         public Car Car { get; set; }
+
+        public bool IsSuccess { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

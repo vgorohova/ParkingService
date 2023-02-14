@@ -6,7 +6,6 @@ using System.Web;
 namespace VO.Parking.API
 {
     using AutoMapper;
-    //using VO_Biblioteca.LibrarieModele;
 
     public class AutoMapperConfiguration
     {
@@ -16,6 +15,7 @@ namespace VO.Parking.API
                 cfg =>
                     {
                         cfg.CreateMap<Entities.Car, DataContracts.Car>();
+                        cfg.CreateMap<Entities.ParkingState, DataContracts.Responses.ParkingStateResponse>();
                     }
                 );
 
