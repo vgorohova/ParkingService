@@ -145,10 +145,24 @@ namespace VO.Parking.API
                 string filePath = SaveImage(detectCarPlateRequest.ImageFileUrl);
 
                 // TODO: call a python service to detect Plate License Number
+                string requestUrl = this.settings.DetectLicenseNumberServiceUrl + HttpUtility.UrlEncode(filePath);
 
+                var detectServiceResponse = requestUrl
+                    .GetJsonFromUrl()
+                    .FromJson<DetectedCarPlateResponse>();
 
                 // TODO: return recognized Plate License Number
-                return new DetectedCarPlateResponse { LicenseNumber = string.Empty };
+                if (detectServiceResponse != null
+                    && detectServiceResponse.IsSuccess)
+                {
+                    return new DetectedCarPlateResponse { LicenseNumber = detectServiceResponse.LicenseNumber };
+                }
+
+                return new DetectedCarPlateResponse { 
+                    LicenseNumber = string.Empty, 
+                    IsSuccess = false, 
+                    ErrorMessage = "Failed to detect a license number." 
+                };
             }
             catch (Exception ex)
             {

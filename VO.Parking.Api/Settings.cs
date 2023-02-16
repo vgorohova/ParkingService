@@ -17,5 +17,13 @@ namespace VO.Parking
                 return ConfigurationManager.AppSettings["ImageUploadPholder"].ToString();
             }
         }
+
+        public string DetectLicenseNumberServiceUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DetectLicenseNumberServiceUrl"].ToString();
+            }
+        }
     }
 }

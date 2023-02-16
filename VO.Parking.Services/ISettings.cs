@@ -10,5 +10,7 @@ namespace VO.Parking
         string ParkingDbConnectionString { get; }
 
         string ImageUploadPholder { get; }
+
+        string DetectLicenseNumberServiceUrl { get; }
     }
 }
