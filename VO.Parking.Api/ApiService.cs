@@ -144,18 +144,19 @@ namespace VO.Parking.API
             {
                 string filePath = SaveImage(detectCarPlateRequest.ImageFileUrl);
 
-                // TODO: call a python service to detect Plate License Number
                 string requestUrl = this.settings.DetectLicenseNumberServiceUrl + HttpUtility.UrlEncode(filePath);
 
                 var detectServiceResponse = requestUrl
                     .GetJsonFromUrl()
                     .FromJson<DetectedCarPlateResponse>();
 
-                // TODO: return recognized Plate License Number
                 if (detectServiceResponse != null
                     && detectServiceResponse.IsSuccess)
                 {
-                    return new DetectedCarPlateResponse { LicenseNumber = detectServiceResponse.LicenseNumber };
+                    return new DetectedCarPlateResponse { 
+                        LicenseNumber = detectServiceResponse.LicenseNumber, 
+                        IsSuccess = true
+                    };
                 }
 
                 return new DetectedCarPlateResponse { 
@@ -177,23 +178,28 @@ namespace VO.Parking.API
             {
                 using (var ms = new MemoryStream(imageUrl.GetBytesFromUrl()))
                 {
-                    return WriteImage(ms);
+                    return WriteImage(ms, imageUrl);
                 }
             }
             return null;
         }
 
-        private string WriteImage(Stream ms)
+        private string WriteImage(Stream ms, string imageUrl)
         {
-            var hash = GetMd5Hash(ms);
+            //var hash = GetMd5Hash(ms);
 
             ms.Position = 0;
-            var fileName = hash + ".png";
+            //var fileName = hash + ".png";
+            string fileName = Path.GetFileName(imageUrl);
             using (var img = Image.FromStream(ms))
             {
                 string uploadsDir = this.settings.ImageUploadPholder.MapHostAbsolutePath();
                 string filePath = uploadsDir.CombineWith(fileName);
-                img.Save(filePath);
+                try
+                {
+                    img.Save(filePath);
+                }
+                catch(Exception ex) { }
 
                 return filePath;
             }
