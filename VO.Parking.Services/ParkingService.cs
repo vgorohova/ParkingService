@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 using VO.Parking.Entities;
 using VO.Parking.Services.Caching;
@@ -108,6 +108,31 @@ namespace VO.Parking.Services
             ParkingState state =  GetParkingState();
             
             return state.AvailableParkingLots > 0;
+        }
+
+        public List<ParkingStatistics> GetParkingStatisticsPerDay()
+        {
+            using (SqlCommand cmd = new SqlCommand("dbo.Parking_GetStatisticsPerDay"))
+            {
+                using (SqlConnection conn = new SqlConnection(settings.ParkingDbConnectionStringSimple))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = conn;
+
+                        DataTable stats = new DataTable();
+                        da.Fill(stats);
+
+                        return stats.AsEnumerable().Select(r => new ParkingStatistics
+                        {
+                            CarsCountPerDay = int.Parse(r["PerDayCarsCount"].ToString()),
+                            DayDate = DateTime.Parse(r["DayDate"].ToString())
+                        }).ToList();
+                    }
+                }
+                
+            }
         }
     }
 }

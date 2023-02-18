@@ -21,5 +21,7 @@ namespace VO.Parking.Services
         Car CarIsLeaving(string licenseNumber);
 
         bool ParkingIsAvailbale();
+
+        List<ParkingStatistics> GetParkingStatisticsPerDay();
     }
 }

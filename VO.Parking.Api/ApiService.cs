@@ -52,7 +52,7 @@ namespace VO.Parking.API
             }
         }
 
-        public object Get(ParkingStateRequest request)
+        public object Any(ParkingStateRequest request)
         {
             this.log.Info("CarsApi.ParkingStateRequest");
             try
@@ -67,7 +67,7 @@ namespace VO.Parking.API
             }
         }
 
-        public object Get(GetParkingCarsRequest request)
+        public object Any(GetParkingCarsRequest request)
         {
             this.log.Info("CarsApi.GetParkingCarsRequest");
             try
@@ -78,6 +78,21 @@ namespace VO.Parking.API
             catch (Exception ex)
             {
                 this.log.Error($"CarsApi.GetParkingCarsRequest \n exception: {ex.Message} \n {ex.InnerException}");
+                return null;
+            }
+        }
+
+        public object Any(GetParkingPerDayStatsRequest request)
+        {
+            this.log.Info("CarsApi.GetParkingPerDayStatsRequest");
+            try
+            {
+                var stats = this.parkingService.GetParkingStatisticsPerDay();
+                return this.mapper.Map<List<ParkingStatistics>, List<ParkingStatsRecord>>(stats);
+            }
+            catch (Exception ex)
+            {
+                this.log.Error($"CarsApi.GetParkingPerDayStatsRequest \n exception: {ex.Message} \n {ex.InnerException}");
                 return null;
             }
         }

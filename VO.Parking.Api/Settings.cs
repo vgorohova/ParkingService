@@ -25,5 +25,13 @@ namespace VO.Parking
                 return ConfigurationManager.AppSettings["DetectLicenseNumberServiceUrl"].ToString();
             }
         }
+
+        public string ParkingDbConnectionStringSimple
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["ParkingDbConnectionStringSimple"].ConnectionString;
+            }
+        }
     }
 }

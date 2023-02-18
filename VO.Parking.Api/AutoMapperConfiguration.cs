@@ -16,6 +16,7 @@ namespace VO.Parking.API
                     {
                         cfg.CreateMap<Entities.Car, DataContracts.Car>();
                         cfg.CreateMap<Entities.ParkingState, DataContracts.Responses.ParkingStateResponse>();
+                        cfg.CreateMap<Services.ParkingStatistics, DataContracts.Responses.ParkingStatsRecord>();
                     }
                 );
 

@@ -53,13 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BibliotecaService.cs" />
     <Compile Include="Caching\CacheKeys.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\MemoryCacheService.cs" />
     <Compile Include="IParkingService.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="ParkingService.cs" />
+    <Compile Include="ParkingStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
